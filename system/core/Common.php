@@ -486,7 +486,7 @@ if ( ! function_exists('show_404'))
 	 * @param	bool
 	 * @return	void
 	 */
-	function show_404($page = '', $log_error = TRUE)
+	function show_404($page = '', $log_error = FALSE)
 	{
 		$_error =& load_class('Exceptions', 'core');
 		$_error->show_404($page, $log_error);
@@ -583,18 +583,19 @@ if ( ! function_exists('set_status_header'))
 				412	=> 'Precondition Failed',
 				413	=> 'Request Entity Too Large',
 				414	=> 'Request-URI Too Long',
-				415	=> 'Unsupported Media Type',
-				416	=> 'Requested Range Not Satisfiable',
-				417	=> 'Expectation Failed',
-				422	=> 'Unprocessable Entity',
+                415 => 'Unsupported Media Type',
+                416 => 'Requested Range Not Satisfiable',
+                417 => 'Expectation Failed',
+                422 => 'Unprocessable Entity',
 
-				500	=> 'Internal Server Error',
-				501	=> 'Not Implemented',
-				502	=> 'Bad Gateway',
-				503	=> 'Service Unavailable',
-				504	=> 'Gateway Timeout',
-				505	=> 'HTTP Version Not Supported'
-			);
+                500 => 'Internal Server Error',
+                501 => 'Not Implemented',
+                502 => 'Bad Gateway',
+                503 => 'Service Unavailable',
+                504 => 'Gateway Timeout',
+                505 => 'HTTP Version Not Supported',
+                530 => 'Closed for technical works'
+            );
 
 			if (isset($stati[$code]))
 			{
@@ -904,7 +905,7 @@ if ( ! function_exists('is_dev'))
      */
     function is_dev()
     {
-        return (ENVIRONMENT == ENV_DEVELOPMENT);
+        return (ENVIRONMENT == ENV_DEVELOPMENT || (defined('ENV_DOCKER') && ENVIRONMENT == ENV_DOCKER));
     }
 }
 if ( ! function_exists('is_prod'))
@@ -1010,7 +1011,7 @@ if ( ! function_exists('cli_response_error'))
      * @param string $error_message
      * @param array $data
      */
-    function cli_response_error($error_message = 'error_core_internal', $data = [])
+    function cli_response_error(string $error_message = 'error_core_internal', $data = [])
     {
         $data['status'] = CI_Core::RESPONSE_STATUS_ERROR;
         $data['error_message'] = $error_message;
@@ -1039,7 +1040,7 @@ if ( ! function_exists('response_error'))
      * @param array $data
      * @return array
      */
-    function response_error($error_message = '', $data = [])
+    function response_error(string $error_message = '', $data = [])
     {
         $data['status'] = CI_Core::RESPONSE_STATUS_ERROR;
         $data['error_message'] = $error_message;

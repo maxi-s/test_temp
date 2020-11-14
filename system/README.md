@@ -1,4 +1,11 @@
-# Codeigniter3
+# Codeigniter3 - a SonicIgniter Framework 🔥
+
+# [Wiki - HOW TO WORK WITH, STYLE / CODE GUIDE HERE](https://github.com/TheFrozenThrone/Codeigniter3/wiki/CODE-GUIDE-%5C-STYLE)
+
+![](https://media3.giphy.com/media/KctGIT2JHvVRC7ESeR/giphy.gif)
+
+# SuperFAST Easy And Lightweight PHP Framework  
+
 
 We just make better shit, rather than comminity :) Myabe we should call it Shadowigniter ? :)
 
@@ -11,7 +18,9 @@ AT LEAST PHP7.1 ! Best: PHP7.3
 
 # How to?
 
-Init repo settings with file `.gitmodules`
+```git submodule add https://github.com/TheFrozenThrone/Codeigniter3 system/```
+
+This will init repo settings with file `.gitmodules`
 ```
 [submodule "Codeigniter3"]
 	path = system
@@ -64,6 +73,20 @@ Or try just click pull button !
 
 ![](https://i.gyazo.com/501142f2b96401adf77c341a3d159d37.png)
 
+#### PHPSTORM - SHIT x2
+
+In project dir edit file `.git/config` . There should be 2 links to SI .
+
+```
+[submodule "Codeigniter3"]
+	url = https://github.com/TheFrozenThrone/Codeigniter3.git
+	active = true
+[submodule "CodeIgniter3"]
+	active = true
+	url = git@github.com:TheFrozenThrone/Codeigniter3.git
+```
+
+
 ### Loader extending
 
 If you want to use subdomain by one application folder, define
@@ -102,41 +125,11 @@ We added `response()` `response_success()` `response_error()` and same for CLI. 
 
 Next generation model for CI !
 
-
 Firstly you should Init Sparrow DB library - https://github.com/mikecao/sparrow from file: Library/Sparrow_starter.php . Easiest way to add to add to autoload. 
 
 Simple use, lightweigt ORM ! Right now there is no proper docs how use it.
 
-### Getters and Setters for PHPSTORM for Emerald_model
+### Emerald_emum 
 
-```
-/**
-* @return ${TYPE_HINT}
-*/
-public ${STATIC} function ${GET_OR_IS}_${FIELD_NAME}()#if(${RETURN_TYPE}): ${RETURN_TYPE}#else#end
-{
-#if (${STATIC} == "static")
-    return self::$${FIELD_NAME};
-#else
-    return $this->${FIELD_NAME};
-#end
-}
+Easy to work with enums, no need to use reflection class instead to get all class constants 
 
-```
-
-```
-/**
-* @param ${TYPE_HINT} $${PARAM_NAME}
-*
-* @return bool
-*/
-public ${STATIC} function set_${FIELD_NAME}(#if (${SCALAR_TYPE_HINT})${SCALAR_TYPE_HINT} #else#end$${PARAM_NAME})
-{
-#if (${STATIC} == "static")
-    self::$${FIELD_NAME} = $${PARAM_NAME};
-#else
-    $this->${FIELD_NAME} = $${PARAM_NAME};
-#end
-    return $this->save('${FIELD_NAME}', $${PARAM_NAME});
-}
-```

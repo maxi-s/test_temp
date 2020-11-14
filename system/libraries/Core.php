@@ -20,7 +20,6 @@ class CI_Core {
     const RESPONSE_STATUS_SUCCESS = 'success';
     const RESPONSE_STATUS_INFO = 'info';
     const RESPONSE_STATUS_ERROR = 'error';
-    const RESPONSE_STATUS_EXCHANGE = 'exchange';
 
     // ACTION | REQUEST ASSIGNED
     const RESPONSE_GENERIC_INTERNAL_ERROR = 'internal_error'; // Если у нас excpetion выбил чтото . в info пишем инфу по ошибке.
@@ -37,4 +36,7 @@ class CI_Core {
     const RESPONSE_GENERIC_SHOULD_WAIT = 'should_wait'; // Действие с задержкой - повторный запрос отправить позже
 
     const WEEK_DAYS = ['su', 'mo', 'tu', 'we', 'th', 'fr', 'sa'];
+
+
+    const CACHE_KEY_SETTINGS = 'settings';
 }

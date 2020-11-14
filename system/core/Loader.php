@@ -222,15 +222,15 @@ class CI_Loader {
 	// --------------------------------------------------------------------
 
 	/**
-	 * Model Loader
-	 *
-	 * Loads and instantiates models.
-	 *
-	 * @param	string	$model		Model name
-	 * @param	string	$name		An optional object name to assign to
-	 * @param	bool	$db_conn	An optional database connection configuration to initialize
-	 * @return	object
-	 */
+     * Model Loader
+     *
+     * Loads and instantiates models.
+     *
+     * @param string|array $model Model name
+     * @param string $name An optional object name to assign to
+     * @param bool $db_conn An optional database connection configuration to initialize
+     * @return    object
+     */
 	public function model($model, $name = '', $db_conn = FALSE)
 	{
 		if (empty($model))

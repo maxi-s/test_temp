@@ -134,8 +134,7 @@ class CI_Emerald_Model {
         if ($this->is_loaded(TRUE) && $this->get_id() != NULL)
         {
             $affect = App::get_ci()->s->from($this->get_table())->where(['id' => $this->id])->update([$key => $value])->execute();
-            return ($affect && (App::get_ci()->s->get_affected_rows() == 1)
-            );
+            return ($affect && (App::get_ci()->s->get_affected_rows() == 1));
         } else
         {
             return FALSE;
@@ -204,21 +203,23 @@ class CI_Emerald_Model {
                     if ($prop instanceof CI_Emerald_Model)
                     {
                         $_info->$field = $prop->object_beautify();
+                    } else
+                    {
+                        $_info->$field = get_class($prop);
                     }
-                    $_info->$field = 'OBJECT';
                     continue;
                 }
                 if (is_array($prop))
                 {
                     $_info->$field = [];
-                    foreach ($prop as $p)
+                    foreach ($prop as $key_pro => $p)
                     {
                         if ($prop instanceof CI_Emerald_Model)
                         {
-                            $_info->$field[] = $p->object_beautify();
+                            $_info->$field[$key_pro] = $p->object_beautify();
                         } else
                         {
-                            $_info->$field[] = $p;
+                            $_info->$field[$key_pro] = $p;
                         }
                     }
                     continue;
