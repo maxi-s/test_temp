@@ -1,3 +1,8 @@
+<?php
+
+use Model\User_model;
+
+?>
 <!doctype html>
 <html lang="en">
 <head>

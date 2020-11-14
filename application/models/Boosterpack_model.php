@@ -1,19 +1,22 @@
 <?php
 
+namespace Model;
+use App;
+use CI_Emerald_Model;
+
 /**
  * Created by PhpStorm.
  * User: mr.incognito
  * Date: 27.01.2020
  * Time: 10:10
  */
-class Boosterpack_model extends CI_Emerald_Model
-{
+class Boosterpack_model extends CI_Emerald_Model {
     const CLASS_TABLE = 'boosterpack';
 
 
     /** @var float Цена бустерпака */
     protected $price;
-    /** @var float Банк, который наполняется  */
+    /** @var float Банк, который наполняется */
     protected $bank;
 
     /** @var string */

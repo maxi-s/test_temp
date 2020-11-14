@@ -1,4 +1,10 @@
 <?php
+
+namespace Model;
+use App;
+use CI_Model;
+use CriticalException;
+
 class Login_model extends CI_Model {
 
     public function __construct()
@@ -12,15 +18,12 @@ class Login_model extends CI_Model {
         App::get_ci()->session->unset_userdata('id');
     }
 
-    public static function start_session(int $user_id)
+    public static function start_session(User_model $user)
     {
         // если перенедан пользователь
-        if (empty($user_id))
-        {
-            throw new CriticalException('No id provided!');
-        }
+        $user->is_loaded(TRUE);
 
-        App::get_ci()->session->set_userdata('id', $user_id);
+        App::get_ci()->session->set_userdata('id', $user->get_id());
     }
 
 

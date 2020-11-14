@@ -164,10 +164,6 @@ class Comment_model extends CI_Emerald_Model
     function __construct($id = NULL)
     {
         parent::__construct();
-
-        App::get_ci()->load->model('User_model');
-
-
         $this->set_id($id);
     }
 

@@ -1,13 +1,19 @@
 <?php
 
+namespace Model;
+use App;
+use CI_Emerald_Model;
+use Comment_model;
+use Exception;
+use stdClass;
+
 /**
  * Created by PhpStorm.
  * User: mr.incognito
  * Date: 27.01.2020
  * Time: 10:10
  */
-class Post_model extends CI_Emerald_Model
-{
+class Post_model extends CI_Emerald_Model {
     const CLASS_TABLE = 'post';
 
 
@@ -153,13 +159,14 @@ class Post_model extends CI_Emerald_Model
     /**
      * @return User_model
      */
-    public function get_user():User_model
+    public function get_user(): User_model
     {
         $this->is_loaded(TRUE);
 
         if (empty($this->user))
         {
-            try {
+            try
+            {
                 $this->user = new User_model($this->get_user_id());
             } catch (Exception $exception)
             {
@@ -172,9 +179,6 @@ class Post_model extends CI_Emerald_Model
     function __construct($id = NULL)
     {
         parent::__construct();
-
-        App::get_ci()->load->model('Comment_model');
-
         $this->set_id($id);
     }
 
@@ -196,6 +200,10 @@ class Post_model extends CI_Emerald_Model
         $this->is_loaded(TRUE);
         App::get_ci()->s->from(self::CLASS_TABLE)->where(['id' => $this->get_id()])->delete()->execute();
         return (App::get_ci()->s->get_affected_rows() > 0);
+    }
+
+    public function comment(){
+
     }
 
     /**
@@ -241,7 +249,8 @@ class Post_model extends CI_Emerald_Model
     {
         $ret = [];
 
-        foreach ($data as $d){
+        foreach ($data as $d)
+        {
             $o = new stdClass();
 
             $o->id = $d->get_id();
@@ -249,7 +258,7 @@ class Post_model extends CI_Emerald_Model
 
             $o->text = $d->get_text();
 
-            $o->user = User_model::preparation($d->get_user(),'main_page');
+            $o->user = User_model::preparation($d->get_user(), 'main_page');
 
             $o->time_created = $d->get_time_created();
             $o->time_updated = $d->get_time_updated();
@@ -277,8 +286,8 @@ class Post_model extends CI_Emerald_Model
 
 //            var_dump($d->get_user()->object_beautify()); die();
 
-        $o->user = User_model::preparation($data->get_user(),'main_page');
-        $o->coments = Comment_model::preparation($data->get_comments(),'full_info');
+        $o->user = User_model::preparation($data->get_user(), 'main_page');
+        $o->coments = Comment_model::preparation($data->get_comments(), 'full_info');
 
         $o->likes = rand(0, 25);
 

@@ -1,5 +1,9 @@
 <?php
 
+use Model\Login_model;
+use Model\Post_model;
+use Model\User_model;
+
 /**
  * Created by PhpStorm.
  * User: mr.incognito
@@ -13,10 +17,6 @@ class Main_page extends MY_Controller
     {
         parent::__construct();
 
-        App::get_ci()->load->model('User_model');
-        App::get_ci()->load->model('Login_model');
-        App::get_ci()->load->model('Post_model');
-
         if (is_prod())
         {
             die('In production it will be hard to debug! Run as development environment!');
@@ -26,8 +26,6 @@ class Main_page extends MY_Controller
     public function index()
     {
         $user = User_model::get_user();
-
-
 
         App::get_ci()->load->view('main_page', ['user' => User_model::preparation($user, 'default')]);
     }
@@ -78,6 +76,8 @@ class Main_page extends MY_Controller
             return $this->response_error(CI_Core::RESPONSE_GENERIC_NO_DATA);
         }
 
+        // Todo: 2 nd task Comment
+        $post->comment();
 
         $posts =  Post_model::preparation($post, 'full_info');
         return $this->response_success(['post' => $posts]);
@@ -86,17 +86,18 @@ class Main_page extends MY_Controller
 
     public function login($user_id)
     {
-        // Right now for tests:
-        $post_id = intval($user_id);
+        // Right now for tests we use from contriller
+        $login = App::get_ci()->input->post('login');
+        $password = App::get_ci()->input->post('password');
 
-        if (empty($post_id)){
+        if (empty($login) || empty($password)){
             return $this->response_error(CI_Core::RESPONSE_GENERIC_WRONG_PARAMS);
         }
 
         // But data from modal window sent by POST request.  App::get_ci()->input...  to get it.
 
 
-        //Todo: Authorisation
+        //Todo: 1 st task - Authorisation.
 
         Login_model::start_session($user_id);
 
@@ -111,19 +112,19 @@ class Main_page extends MY_Controller
     }
 
     public function add_money(){
-        // todo: add money to user logic
-        return $this->response_success(['amount' => rand(1,55)]);
+        // todo: 4th task  add money to user logic
+        return $this->response_success(['amount' => rand(1,55)]); // Колво лайков под постом \ комментарием чтобы обновить . Сейчас рандомная заглушка
     }
 
     public function buy_boosterpack(){
-        // todo: add money to user logic
-        return $this->response_success(['amount' => rand(1,55)]);
+        // todo: 5th task add money to user logic
+        return $this->response_success(['amount' => rand(1,55)]); // Колво лайков под постом \ комментарием чтобы обновить . Сейчас рандомная заглушка
     }
 
 
     public function like(){
-        // todo: add like post\comment logic
-        return $this->response_success(['likes' => rand(1,55)]); // Колво лайков под постом \ комментарием чтобы обновить
+        // todo: 3rd task add like post\comment logic
+        return $this->response_success(['likes' => rand(1,55)]); // Колво лайков под постом \ комментарием чтобы обновить . Сейчас рандомная заглушка
     }
 
 }
