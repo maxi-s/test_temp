@@ -264,7 +264,7 @@ class User_model extends CI_Emerald_Model {
      * @return self[]
      * @throws Exception
      */
-    public static function get_all()
+    public static function get_all():array
     {
 
         $data = App::get_ci()->s->from(self::CLASS_TABLE)->many();
@@ -275,6 +275,47 @@ class User_model extends CI_Emerald_Model {
         }
         return $ret;
     }
+
+
+    /**
+     * Getting id from session
+     * @return integer|null
+     */
+    public static function get_session_id(): ?int
+    {
+        return App::get_ci()->session->userdata('id');
+    }
+
+    /**
+     * @return bool
+     */
+    public static function is_logged():bool
+    {
+        $steam_id = intval(self::get_session_id());
+        return $steam_id > 0;
+    }
+
+
+
+    /**
+     * Returns current user or empty model
+     * @return User_model
+     */
+    public static function get_user()
+    {
+        if (! is_null(self::$_current_user)) {
+            return self::$_current_user;
+        }
+        if ( ! is_null(self::get_session_id()))
+        {
+            self::$_current_user = new self(self::get_session_id());
+            return self::$_current_user;
+        } else
+        {
+            return new self();
+        }
+    }
+
 
 
     /**
@@ -340,47 +381,5 @@ class User_model extends CI_Emerald_Model {
 
         return $o;
     }
-
-
-    /**
-     * Getting id from session
-     * @return integer|null
-     */
-    public static function get_session_id(): ?int
-    {
-        return App::get_ci()->session->userdata('id');
-    }
-
-    /**
-     * @return bool
-     */
-    public static function is_logged()
-    {
-        $steam_id = intval(self::get_session_id());
-        return $steam_id > 0;
-    }
-
-
-
-    /**
-     * Returns current user or empty model
-     * @return User_model
-     */
-    public static function get_user()
-    {
-        if (! is_null(self::$_current_user)) {
-            return self::$_current_user;
-        }
-        if ( ! is_null(self::get_session_id()))
-        {
-            self::$_current_user = new self(self::get_session_id());
-            return self::$_current_user;
-        } else
-        {
-            return new self();
-        }
-    }
-
-
 
 }
